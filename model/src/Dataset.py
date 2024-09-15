@@ -1,5 +1,6 @@
 import numpy as np
-from torch.utils.data.dataset import Dataset
+from torch.utils.data import Dataset, DataLoader, random_split
+
 
 class LSTMdataset(Dataset):
     def __init__(self, playlists):
@@ -30,5 +31,21 @@ class LSTMdataset(Dataset):
     def __getitem__(self, idx):
         data = np.array(self.data[idx][0])
         label = np.array(self.data[idx][1], dtype=np.int64)
-
         return data, label
+
+    
+def build_dataloaders(playlists, batch_size = 64):
+    dataset = LSTMdataset(playlists)
+
+    #dataset 생성
+    train_size = int(0.8 * len(dataset))
+    test_size = len(dataset) - train_size
+
+    # random_split을 통해 train과 test 셋 나누기
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+
+    # DataLoader로 묶기 (필요 시 batch_size 설정)
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)    #dataloader 생성
+
+    return train_loader, test_loader

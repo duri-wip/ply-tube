@@ -6,43 +6,48 @@ with open("/home/ubuntu/anonimous_video_comments.json",'r') as f:
 # 문장에 들어가야 하는 값은 ['단어','단어','단어']형태로 들어있어야 함
 
 from src.Preprocessing import preprocessing
-from src.Dataset import LSTMdataset
+from src.Dataset import LSTMdataset, build_dataloaders
 from src.LSTMModel import LSTMModel
 
 playlists = preprocessing(playlists)
+train_loader, test_loader = build_dataloaders(playlists=playlists, batch_size=64)
 
 dataset = LSTMdataset(playlists = playlists)
 
-model = LSTMModel(num_embeddings=len(dataset.BOM))            
+model = LSTMModel(num_embeddings=len(dataset.BOM))
 
-
-from torch.utils.data.dataloader import DataLoader
-loader = DataLoader(dataset, batch_size=16)
 import torch.nn as nn
 import torch
+
 # 손실 함수 및 옵티마이저 정의
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # 6. 모델 학습
-from src.Train import train_model
-train_model(model, loader, criterion, optimizer)
+import sys
+from src.Train import run_training
 
-from sklearn.preprocessing import LabelEncoder
+epochs = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+learning_rate = float(sys.argv[2]) if len(sys.argv) > 2 else 1e-2
+batch_size = int(sys.argv[3]) if len(sys.argv) > 3 else 64
 
-all_songs = [song for playlist in playlists for song in playlist]
-
-label_encoder = LabelEncoder()
-label_encoder.fit(all_songs)
+run_training(epochs, learning_rate, batch_size)
 
 
-from src.Predict import predict_next_songs, predict_one_song
-# 7. 다음 노래 예측 함수
-input_text = "뉴진스 - Attention"
-predicted_song = predict_one_song(model, input_text, label_encoder)
-predicted_songs = predict_next_songs(model, input_text, label_encoder=label_encoder, top_k=10)
+# from sklearn.preprocessing import LabelEncoder
 
-print(f'One recommended song:{predicted_song}')
-print(f"Next recommended song: {predicted_songs}")
+# all_songs = [song for playlist in playlists for song in playlist]
 
+# label_encoder = LabelEncoder()
+# label_encoder.fit(all_songs)
+
+
+# from src.Predict import predict_next_songs, predict_one_song
+# # 7. 다음 노래 예측 함수
+# input_text = "뉴진스 - Attention"
+# predicted_song = predict_one_song(model, input_text, label_encoder)
+# predicted_songs = predict_next_songs(model, input_text, label_encoder=label_encoder, top_k=10)
+
+# print(f'One recommended song:{predicted_song}')
+# print(f"Next recommended song: {predicted_songs}")
 
