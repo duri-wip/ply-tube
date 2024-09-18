@@ -1,5 +1,5 @@
 import json
-with open("/home/swcpractice/anonimous_video_comments.json",'r') as f:
+with open("/home/ubuntu/anonimous_video_comments.json",'r') as f:
     playlists = json.load(f)
 
 #플레이리스트 하나를 하나의 문장으로 취급
