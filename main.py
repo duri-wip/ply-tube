@@ -1,42 +1,81 @@
+#데이터 로드 - 샘플
 import json
 with open("/home/ubuntu/anonimous_video_comments.json",'r') as f:
     playlists = json.load(f)
 
-#플레이리스트 하나를 하나의 문장으로 취급
-# 문장에 들어가야 하는 값은 ['단어','단어','단어']형태로 들어있어야 함
 
+#mlflow tracking uri 설정
+from dotenv import load_dotenv
+import os
+import mlflow
+
+load_dotenv(verbose=True, override=True)
+tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
+mlflow.set_tracking_uri(tracking_uri)
+print(os.getenv('MLFLOW_TRACKING_URI'))
+
+# artifact_store_path = "file:///home/ubuntu/feature_store"
+# mlflow.set_tracking_uri(artifact_store_path)
+
+
+
+#전처리
 from src.Preprocessing import preprocessing
-from src.Dataset import LSTMdataset, build_dataloaders
-# from src.LSTMModel import LSTMModel
+from src.Dataset import LSTMdataset
 
 playlists = preprocessing(playlists)
 dataset = LSTMdataset(playlists = playlists)
-# train_dataset, test_dataset, train_loader, test_loader = build_dataloaders(dataset, batch_size=64)
-
 print()
 
-
-import torch.nn as nn
-import torch
-
-# 손실 함수 및 옵티마이저 정의
-# criterion = nn.CrossEntropyLoss()
-# optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-# from src.Train import train_model
-
-# train_model(model, train_dataset, train_loader, criterion=criterion, optimizer=optimizer)
-
-
-# 6. 모델 학습
-# import sys
+#모델 학습
 from src.Train import run_training
 
-# epochs = int(sys.argv[1]) if len(sys.argv) > 1 else 10
-# learning_rate = float(sys.argv[2]) if len(sys.argv) > 2 else 1e-2
-# batch_size = int(sys.argv[3]) if len(sys.argv) > 3 else 64
-
 run_training(dataset=dataset)
+
+
+#학습된 모델 정보 불러오기
+
+# for version in versions:
+#     print(f"Model Name: {version.name}")
+#     model_name = version.name
+#     print(f"Version: {version.version}")
+#     model_version = version.version
+#     print(f"Stage: {version.current_stage}")
+#     print(f"Run ID: {version.run_id}")
+#     print(f"Status: {version.status}")
+
+
+# #모델 서빙
+# import mlflow.pyfunc
+# import requests
+# import pandas as pd
+
+
+
+# model_uri = f"models:/{model_name}/{model_version}"
+# model = mlflow.pyfunc.load_model(model_uri)
+# print(model)
+
+# # Input data - here we assume that you are predicting based on song names
+# input_songs = ['뉴진스 - Attention'] # Replace with actual songs
+
+# # Prepare the data in the required format (as a pandas DataFrame)
+# input_data = pd.DataFrame(input_songs, columns=["input_song"])
+
+# # Convert the input data to JSON format, which is required by the MLflow model serving endpoint
+# json_data = input_data.to_json(orient="split")
+
+# # Send the request to the MLflow serving endpoint
+# response = requests.post(model_uri, headers={"Content-Type": "application/json"}, data=json_data)
+
+# # # Check the response
+# if response.status_code == 200:
+#     # Print the predictions
+#     predictions = response.json()
+#     print("Predicted next songs:", predictions)
+# else:
+#     # Print error message
+#     print(f"Error: {response.status_code}, {response.text}")
 
 
 # # from sklearn.preprocessing import LabelEncoder

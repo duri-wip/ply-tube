@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/8054341fcf174b5b8ca24e3a1549ec26/artifacts
+end_time: 1726659761903
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8054341fcf174b5b8ca24e3a1549ec26
+run_name: welcoming-asp-248
+run_uuid: 8054341fcf174b5b8ca24e3a1549ec26
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1726659739926
+status: 3
+tags: []
+user_id: ubuntu

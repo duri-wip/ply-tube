@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/381e2d1a380b46f5a25b877f3a9f7c97/artifacts
+end_time: 1726660915195
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 381e2d1a380b46f5a25b877f3a9f7c97
+run_name: fortunate-elk-407
+run_uuid: 381e2d1a380b46f5a25b877f3a9f7c97
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1726660893236
+status: 3
+tags: []
+user_id: ubuntu

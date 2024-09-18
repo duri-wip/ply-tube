@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/e6b9240915c34f7a9f4e58ff4fdeac73/artifacts
+end_time: 1726657855801
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e6b9240915c34f7a9f4e58ff4fdeac73
+run_name: flawless-smelt-433
+run_uuid: e6b9240915c34f7a9f4e58ff4fdeac73
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1726657834420
+status: 3
+tags: []
+user_id: ubuntu

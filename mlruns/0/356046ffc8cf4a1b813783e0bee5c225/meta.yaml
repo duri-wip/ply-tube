@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/356046ffc8cf4a1b813783e0bee5c225/artifacts
+end_time: 1726662272783
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 356046ffc8cf4a1b813783e0bee5c225
+run_name: bedecked-penguin-889
+run_uuid: 356046ffc8cf4a1b813783e0bee5c225
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1726662251157
+status: 3
+tags: []
+user_id: ubuntu
