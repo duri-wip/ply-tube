@@ -35,17 +35,13 @@ class LSTMdataset(Dataset):
 
     
 def build_dataloaders(dataset, batch_size = 64):
-    #dataset 생성
     train_size = int(0.8 * len(dataset))
     test_size = len(dataset) - train_size
 
-    # random_split을 통해 train과 test 셋 나누기
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
-    # DataLoader로 묶기 (필요 시 batch_size 설정)
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)    #dataloader 생성
 
     print('Train loader loaded! \n size : {len(train_loader.dataset)} \n Test loader loaded! \n size : {len(test_loader.dataset)}')
-    print(len(train_dataset.dataset.BOM))
     return train_dataset, test_dataset, train_loader, test_loader
