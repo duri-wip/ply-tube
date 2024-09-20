@@ -9,7 +9,8 @@ on:
 
 jobs:
   run-main-py:
-    runs-on: [self-hosted, server02]
+    runs-on: 
+      labels: server02
     steps:
       - name: Checkout dataset branch
         uses: actions/checkout@v2
