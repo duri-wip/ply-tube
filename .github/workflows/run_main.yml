@@ -3,25 +3,25 @@ name: Runmain
 on:
   push:
     branches:
-      - dataset  # Trigger on push to the dataset branch
+      - dataset 
 
 jobs:
   run-main-py:
-    runs-on: server02  # Self-hosted Runner
+    runs-on: server02  
 
     steps:
-    # 1. Checkout the dataset branch
     - name: Checkout dataset branch
       uses: actions/checkout@v2
       with:
-        ref: dataset  # Change this to dataset if needed
-
-    # 2. Set up pyenv and activate plytube virtual environment
+        ref: dataset  
+        
     - name: Set up pyenv and activate virtual environment
       run: |
         export PATH="$HOME/.pyenv/bin:$PATH"
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
         eval "$(pyenv virtualenv-init -)"
-        pyenv activate plytube  # Activate plytube environment
-        dvc pull  # Pull data from DVC
+        pyenv activate plytube  
+        dvc pull
+        python /home/ubuntu/ply-tube/main.py
+    
