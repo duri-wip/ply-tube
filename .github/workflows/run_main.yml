@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-main-py:
-    runs-on: self-hosted  # Self-hosted Runner에서 실행
+    runs-on: server02  # Self-hosted Runner에서 실행
 
     steps:
     # 1. 저장소의 main 브랜치 체크아웃
