@@ -1,0 +1,32 @@
+name: Model Training
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 트리거
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # 사용하려는 Python 버전
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install dvc[aws]  # S3를 사용하는 경우
+
+      - name: Pull DVC data
+        run: |
+          dvc pull  # DVC를 사용하여 데이터셋을 S3에서 가져옵니다.
+
+      - name: Run training script
+        run: |
+          python train.py  # 모델 훈련 스크립트를 실행합니다.
