@@ -1,32 +1,45 @@
-name: Model Training
+name: Run main.py after DVC push on dataset branch
 
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시될 때 트리거
+      - dataset  # dataset 브랜치에서 push가 발생할 때 트리거
+    paths:
+      - '**/*.dvc'  # DVC 파일에 대한 push 이벤트 감지
 
 jobs:
-  train:
-    runs-on: ubuntu-latest
+  run-main-py:
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'  # 사용하려는 Python 버전
+    # 1. dataset 브랜치를 체크아웃 (push가 발생한 브랜치)
+    - name: Checkout dataset branch
+      uses: actions/checkout@v2
+      with:
+        ref: dataset  # 현재 dataset 브랜치에서 체크아웃
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install dvc[aws]  # S3를 사용하는 경우
+    # 2. main 브랜치로 이동
+    - name: Checkout main branch
+      run: git checkout main  # main 브랜치로 변경하여 main.py 실행
 
-      - name: Pull DVC data
-        run: |
-          dvc pull  # DVC를 사용하여 데이터셋을 S3에서 가져옵니다.
+    # 3. Python 설정 (필요한 Python 버전으로 설치)
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11.9'
 
-      - name: Run training script
-        run: |
-          python train.py  # 모델 훈련 스크립트를 실행합니다.
+    # 4. 필요한 의존성 설치 (requirements.txt에 필요한 라이브러리 추가)
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 5. DVC pull (데이터셋 가져오기)
+    - name: Pull data from DVC
+      run: |
+        pip install dvc  # DVC 설치
+        dvc pull
+
+    # 6. main.py 실행
+    - name: Run main.py
+      run: python main.py
