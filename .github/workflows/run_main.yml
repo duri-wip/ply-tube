@@ -24,4 +24,3 @@ jobs:
         pyenv activate plytube  
         dvc pull
         python /home/ubuntu/ply-tube/main.py
-    
