@@ -25,4 +25,3 @@ jobs:
         eval "$(pyenv virtualenv-init -)"
         pyenv activate plytube  # Activate plytube environment
         dvc pull  # Pull data from DVC
-        python /home/ubuntu/ply-tube/main.py  # Run main.py
