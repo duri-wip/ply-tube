@@ -1,0 +1,31 @@
+name: Runmain
+
+on:
+  push:
+    branches:
+      - dataset  # Trigger on dataset branch push
+
+  workflow_dispatch:
+
+jobs:
+  run-main-py:
+    runs-on: server02
+    steps:
+      - name: Checkout dataset branch
+        uses: actions/checkout@v2
+        with:
+          ref: dataset
+
+      - name: Enable Debugging
+        run: |
+          echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
+
+      - name: Set up pyenv and activate virtual environment
+        run: |
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv activate plytube
+          dvc pull
+          python /home/ubuntu/ply-tube/main.py
