@@ -1,0 +1,4 @@
+[core]
+    remote = dataset
+['remote "dataset"']
+    url = s3://pliy-tube-datasets
