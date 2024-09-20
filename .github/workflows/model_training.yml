@@ -1,45 +1,54 @@
-name: Run main.py after DVC push on dataset branch
+name: Run main.py
 
 on:
   push:
     branches:
       - dataset  # dataset 브랜치에서 push가 발생할 때 트리거
-    paths:
-      - '**/*.dvc'  # DVC 파일에 대한 push 이벤트 감지
 
 jobs:
   run-main-py:
-    runs-on: self-hosted
+    runs-on: self-hosted  # Self-hosted Runner에서 실행
 
     steps:
-    # 1. dataset 브랜치를 체크아웃 (push가 발생한 브랜치)
-    - name: Checkout dataset branch
+    # 1. 저장소의 main 브랜치 체크아웃
+    - name: Checkout main branch
       uses: actions/checkout@v2
       with:
-        ref: dataset  # 현재 dataset 브랜치에서 체크아웃
+        ref: main  # main 브랜치를 체크아웃
 
-    # 2. main 브랜치로 이동
-    - name: Checkout main branch
-      run: git checkout main  # main 브랜치로 변경하여 main.py 실행
-
-    # 3. Python 설정 (필요한 Python 버전으로 설치)
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11.9'
-
-    # 4. 필요한 의존성 설치 (requirements.txt에 필요한 라이브러리 추가)
-    - name: Install dependencies
+    - name: Activate plytube virtual environment
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube
 
-    # 5. DVC pull (데이터셋 가져오기)
-    - name: Pull data from DVC
+    - name: Install dependencies in plytube environment
       run: |
-        pip install dvc  # DVC 설치
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube
+        pip install --upgrade pip
+
+    # 4. DVC pull (데이터 가져오기)
+    - name: Pull data from DVC in plytube environment
+      run: |
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube
+        pip install dvc
         dvc pull
 
-    # 6. main.py 실행
-    - name: Run main.py
-      run: python main.py
+    - name: Run main.py in plytube environment
+      run: |
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube
+        python ply-tube/main.py
