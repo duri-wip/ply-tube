@@ -5,6 +5,8 @@ on:
     branches:
       - dataset  # Trigger on dataset branch push
 
+  workflow_dispatch:
+
 jobs:
   run-main-py:
     runs-on: server02
