@@ -1,0 +1,37 @@
+name: Run main.py
+
+on:
+  push:
+    branches:
+      - dataset  # dataset 브랜치에서 push가 발생할 때 트리거
+
+jobs:
+  run-main-py:
+    runs-on: self-hosted  # Self-hosted Runner에서 실행
+
+    steps:
+    # 1. 저장소의 main 브랜치 체크아웃
+    - name: Checkout main branch
+      uses: actions/checkout@v2
+      with:
+        ref: main  # main 브랜치를 체크아웃
+
+    # 2. pyenv 설정 및 가상환경 plytube 활성화
+    - name: Activate plytube virtual environment
+      run: |
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube  # plytube 가상환경 활성화
+
+    # 4. DVC pull (데이터 가져오기)
+    - name: Pull data from DVC in plytube environment
+      run: |
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv activate plytube
+        dvc pull
+
