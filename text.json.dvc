@@ -1,0 +1,5 @@
+outs:
+- md5: b2b6d5658d2ac6a63f70c7cb22524776
+  size: 23
+  hash: md5
+  path: text.json
