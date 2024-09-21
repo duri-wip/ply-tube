@@ -22,10 +22,14 @@ jobs:
 
       - name: Set up pyenv and activate virtual environment
         run: |
-          export PATH="$HOME/.pyenv/bin:$PATH"
-          eval "$(pyenv init --path)"
-          eval "$(pyenv init -)"
-          eval "$(pyenv virtualenv-init -)"
           pyenv activate plytube
+
+      - name: Run mlflow server
+        run: |
+          cd /home/ubuntu/ply-tube
+          mlflow server --host 0.0.0.0 --port 5000
+
+      - name : Pull and execute main file
+        run: |          
           dvc pull
           python /home/ubuntu/ply-tube/main.py
