@@ -36,5 +36,6 @@ jobs:
 
       - name : Pull and execute main file
         run: |          
+          cd /home/ubuntu/feature_store
           dvc pull
           python /home/ubuntu/ply-tube/main.py
