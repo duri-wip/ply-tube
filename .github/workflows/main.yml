@@ -34,9 +34,8 @@ jobs:
       - name: Run mlflow server
         run: |
           cd /home/ubuntu/ply-tube
-          nohup mlflow server --host 0.0.0.0 --port 5000 >
-          mlflow_server.log 2>&1 &
-          continue-on-error: true
+          nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
+        continue-on-error: true
       - name: Pull and execute main file
         run: |
           cd /home/ubuntu/feature_store
