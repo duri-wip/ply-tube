@@ -20,6 +20,11 @@ jobs:
         run: |
           echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
 
+      - name: Set up AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
       - name: Set up pyenv and activate virtual environment
         run: |
           export PATH="$HOME/.pyenv/bin:$PATH"
