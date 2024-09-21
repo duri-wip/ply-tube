@@ -16,11 +16,11 @@ jobs:
         with:
           ref: dataset
 
-      - name: Enable Debugging
+      - name: 디버그 로그 보기
         run: |
           echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
       
-      - name: Set up pyenv and activate virtual environment
+      - name: 가상환경 활성화하고 확인하기
         run: |
           export PATH="$HOME/.pyenv/bin:$PATH"
           eval "$(pyenv init --path)"
@@ -31,7 +31,7 @@ jobs:
           pyenv --version
           pip freeze | grep dvc
       
-      - name: Set up AWS credentials
+      - name: 모델 학습
         run: |
           echo "AWS credential 설정완료"
           export PATH="$HOME/.pyenv/bin:$PATH"
@@ -44,8 +44,25 @@ jobs:
           dvc pull
           cd /home/ubuntu/ply-tube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
-          python /home/ubuntu/ply-tube/main.py
+          python /home/ubuntu/plytube/main.py
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: 추론서버 띄우기
+        run: |
+          echo "AWS credential 설정완료"
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv activate plytube
+          pkill -f mlflow
+          cd /home/ubuntu/ply-tube
+          nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
+          python /home/ubuntu/plytube/app.py
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
       
