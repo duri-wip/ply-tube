@@ -25,10 +25,10 @@ dataset = LSTMdataset(playlists = playlists)
 
 #모델 학습
 from src.Train import run_training
-
 run_training(dataset=dataset)
 
-from Utils.ProductionAlias import production_alias
+# 운영중인 모델과 비교해서 새로운 모델로 변경
+from utils.ProductionAlias import production_alias
 model_name = "LSTMModel"
 
 production_alias(model_name=model_name, param='Loss')

@@ -41,25 +41,18 @@ def test_model(model, dataset, dataloader, loss_fn):
             # 모델 예측
             pred = model(X_batch)
             
-            # 배치 손실 계산 (배치 크기만큼 곱해준 후 나중에 전체 평균)
             batch_loss = loss_fn(pred, Y_batch).item() * X_batch.size(0)
             total_loss += batch_loss  # 총 손실에 더함
             
-            # 배치 정확도 계산
             correct_predictions = (pred.argmax(dim=1) == Y_batch).sum().item()
             total_correct += correct_predictions  # 맞춘 예측 수 더하기
             
-            # 예측값과 실제값 저장
             all_preds.extend(pred.argmax(dim=1).cpu().numpy())
             all_labels.extend(Y_batch.cpu().numpy())
 
-    # 전체 평균 손실 계산 (전체 샘플 수로 나누기)
     avg_loss = total_loss / total_samples
-
-    # 전체 정확도 계산 (정확하게 예측한 샘플 수를 전체 샘플 수로 나눔)
     accuracy = total_correct / total_samples * 100
 
-    # Precision, Recall, F1 Score 계산
     precision = precision_score(all_labels, all_preds, average='weighted', zero_division=1)
     recall = recall_score(all_labels, all_preds, average='weighted', zero_division=1)
     f1 = f1_score(all_labels, all_preds, average='weighted', zero_division=1)

@@ -1,6 +1,5 @@
-import torch.nn as nn
 import torch
-from mlflow.models.signature import infer_signature
+import torch.nn as nn
 
 
 class LSTMModel(nn.Module):

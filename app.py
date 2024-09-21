@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify
+import os
 import torch
 import mlflow
-from Utils.ProductionModelLoad import load_production_model_by_stage
 from dotenv import load_dotenv
-import os
-from Utils.AllSongs import generate_all_songs
-from Utils.Predict import predict_songs
+from flask import Flask, request, jsonify
+
+from utils.ProductionModelLoad import load_production_model_by_stage
+from utils.AllSongs import generate_all_songs
+from utils.Predict import predict_songs
 
 
 # Flask 애플리케이션 초기화

@@ -1,7 +1,7 @@
 import json
-from src.Preprocessing import preprocessing
 from sklearn.preprocessing import LabelEncoder
 
+from src.Preprocessing import preprocessing
 
 def generate_all_songs():
     with open("/home/ubuntu/feature_store/playlist.json", 'r') as f:
