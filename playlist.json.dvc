@@ -1,0 +1,5 @@
+outs:
+- md5: 26ca2358f0f97a9d64000e60555a8b65
+  size: 8005
+  hash: md5
+  path: playlist.json
