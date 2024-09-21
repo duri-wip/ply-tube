@@ -22,7 +22,11 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: echo "AWS credential 설정완료"
+        run: |
+          echo "AWS credential 설정완료"
+          cd /home/ubuntu/feature_store
+          dvc pull
+          python /home/ubuntu/ply-tube/main.py
       - name: Set up pyenv and activate virtual environment
         run: |
           export PATH="$HOME/.pyenv/bin:$PATH"
@@ -36,8 +40,3 @@ jobs:
           cd /home/ubuntu/ply-tube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
         continue-on-error: true
-      - name: Pull and execute main file
-        run: |
-          cd /home/ubuntu/feature_store
-          dvc pull
-          python /home/ubuntu/ply-tube/main.py
