@@ -58,7 +58,7 @@ jobs:
           eval "$(pyenv virtualenv-init -)"
           pyenv activate plytube
           pkill -f mlflow
-          cd /home/ubuntu/ply-tube
+          cd /home/ubuntu/plytube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
           python /home/ubuntu/plytube/app.py
         env:
