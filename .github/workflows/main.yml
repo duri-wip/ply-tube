@@ -27,7 +27,9 @@ jobs:
           eval "$(pyenv init -)"
           eval "$(pyenv virtualenv-init -)"
           pyenv activate plytube
+          pyenv shell plytube
           pyenv --version
+          pip freeze | grep dvc
       
       - name: Run mlflow server
         run: |
