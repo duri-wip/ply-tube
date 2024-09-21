@@ -29,7 +29,10 @@ jobs:
 
       - name: Activate pyenv environment
         run: |
+          pyenv shell 3.11.9
+          pyenv versions
           pyenv activate plytube
+          pyenv --version
 
       - name: Run mlflow server
         run: |
