@@ -40,6 +40,11 @@ jobs:
       - name: Set up AWS credentials
         run: |
           echo "AWS credential 설정완료"
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv activate plytube
           cd /home/ubuntu/feature_store
           dvc version
           dvc pull
