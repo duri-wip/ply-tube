@@ -31,12 +31,6 @@ jobs:
           pyenv --version
           pip freeze | grep dvc
       
-      - name: Run mlflow server
-        run: |
-          cd /home/ubuntu/ply-tube
-          nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
-        continue-on-error: true
-
       - name: Set up AWS credentials
         run: |
           echo "AWS credential 설정완료"
@@ -48,6 +42,8 @@ jobs:
           cd /home/ubuntu/feature_store
           dvc version
           dvc pull
+          cd /home/ubuntu/ply-tube
+          nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
           python /home/ubuntu/ply-tube/main.py
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
