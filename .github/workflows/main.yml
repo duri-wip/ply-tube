@@ -39,6 +39,7 @@ jobs:
         run: |
           echo "AWS credential 설정완료"
           cd /home/ubuntu/feature_store
+          dvc version
           dvc pull
           python /home/ubuntu/ply-tube/main.py
         env:
