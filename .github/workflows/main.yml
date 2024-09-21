@@ -1,0 +1,35 @@
+name: Runmain
+
+on:
+  push:
+    branches:
+      - dataset  # Trigger on dataset branch push
+
+  workflow_dispatch:
+
+jobs:
+  run-main-py:
+    runs-on: [self-hosted, linux, ARM64]
+    steps:
+      - name: Checkout dataset branch
+        uses: actions/checkout@v2
+        with:
+          ref: dataset
+
+      - name: Enable Debugging
+        run: |
+          echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
+
+      - name: Set up pyenv and activate virtual environment
+        run: |
+          pyenv activate plytube
+
+      - name: Run mlflow server
+        run: |
+          cd /home/ubuntu/ply-tube
+          mlflow server --host 0.0.0.0 --port 5000
+
+      - name : Pull and execute main file
+        run: |          
+          dvc pull
+          python /home/ubuntu/ply-tube/main.py
