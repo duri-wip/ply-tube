@@ -22,14 +22,13 @@ jobs:
 
       - name: Set up pyenv and activate virtual environment
         run: |
-          echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> $GITHUB_ENV
-          echo 'eval "$(pyenv init --path)"' >> $GITHUB_ENV
-          echo 'eval "$(pyenv init -)"' >> $GITHUB_ENV
-          echo 'eval "$(pyenv virtualenv-init -)"' >> $GITHUB_ENV
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
 
       - name: Activate pyenv environment
         run: |
-          source ~/.bashrc
           pyenv activate plytube
 
       - name: Run mlflow server
