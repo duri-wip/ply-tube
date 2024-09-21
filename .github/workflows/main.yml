@@ -15,18 +15,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: dataset
+
       - name: Enable Debugging
         run: |
           echo "GITHUB_ACTIONS_DEBUG=true" >> $GITHUB_ENV
-      - name: Set up AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          echo "AWS credential 설정완료"
-          cd /home/ubuntu/feature_store
-          dvc pull
-          python /home/ubuntu/ply-tube/main.py
+      
       - name: Set up pyenv and activate virtual environment
         run: |
           export PATH="$HOME/.pyenv/bin:$PATH"
@@ -35,8 +28,20 @@ jobs:
           eval "$(pyenv virtualenv-init -)"
           pyenv activate plytube
           pyenv --version
+      
       - name: Run mlflow server
         run: |
           cd /home/ubuntu/ply-tube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
         continue-on-error: true
+
+      - name: Set up AWS credentials
+        run: |
+          echo "AWS credential 설정완료"
+          cd /home/ubuntu/feature_store
+          dvc pull
+          python /home/ubuntu/ply-tube/main.py
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
