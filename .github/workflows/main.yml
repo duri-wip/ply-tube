@@ -8,10 +8,7 @@ on:
 
 jobs:
   run-main-py:
-    runs-on:
-      - self-hosted
-      - linux
-      - ARM64
+    runs-on: [self-hosted, linux, ARM64]
 
     steps:
       - name: Checkout dataset branch
