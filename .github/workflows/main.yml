@@ -26,11 +26,6 @@ jobs:
           eval "$(pyenv init --path)"
           eval "$(pyenv init -)"
           eval "$(pyenv virtualenv-init -)"
-
-      - name: Activate pyenv environment
-        run: |
-          pyenv shell 3.11.9
-          pyenv versions
           pyenv activate plytube
           pyenv --version
 
