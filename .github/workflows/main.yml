@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dataset
-  # workflow_dispatch: null
 
 jobs:
   run-main-py:
