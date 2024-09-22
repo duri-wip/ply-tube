@@ -21,20 +21,20 @@
 
 ### ![Pipeline server] (링크..)
 
-| Tool/Technology | Description/Purpose                       | Version |
-| --------------- | ----------------------------------------- | ------- |
-| Airflow         | 데이터 수집 및 파이프라인 워크플로우 관리 |         |
-| Postgres        | RDB, 1차 전처리된 raw데이터 저장          |         |
-| Pgpool          | PostgreSQL 이중화 구현                    |         |
-| DVC             | Data version control                      |         |
-| FastAPI         | 백엔드 서버 Web framework                 |         |
+| Tool/Technology | Description/Purpose                       
+| --------------- | ----------------------------------------- 
+| Airflow         | 데이터 수집 및 파이프라인 워크플로우 관리 | 
+| Postgres        | RDB, 1차 전처리된 raw데이터 저장          | 
+| Pgpool          | PostgreSQL 이중화 구현                    |
+| DVC             | Data version control                      |  
+| FastAPI         | 백엔드 서버 Web framework                 |  
 
 ### ![Model server] (링크)
 
-| Tool/Technology | Description/Purpose     | Version |
-| --------------- | ----------------------- | ------- |
-| DVC             | Data version control    |         |
-| MLflow          | 머신러닝 lifecycle 관리 |         |
-| Pyenv           | Python 가상환경관리     |         |
-| Python          | pytorch, mlflow를 수행  |         |
-| GitHub Actions  | CI/CD automation        |         |
+| Tool/Technology | Description/Purpose     | 
+| --------------- | ----------------------- | 
+| DVC             | Data version control    |  
+| MLflow          | 머신러닝 lifecycle 관리 | 
+| Pyenv           | Python 가상환경관리     | 
+| Python          | pytorch, mlflow를 수행  | 
+| GitHub Actions  | CI/CD automation        | 
