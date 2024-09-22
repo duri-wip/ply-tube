@@ -29,7 +29,7 @@
 | DVC             | Data version control                      |  
 | FastAPI         | 백엔드 서버 Web framework                 |  
 
-### ![Model server] (Model.md)
+### [Model server] (Model.md)
 
 | Tool/Technology | Description/Purpose     | 
 | --------------- | ----------------------- | 
