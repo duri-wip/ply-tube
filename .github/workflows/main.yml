@@ -49,6 +49,7 @@ jobs:
           dvc version
           dvc pull
           python /home/ubuntu/ply-tube/main.py
+          python /home/ubuntu/ply-tube/app.py
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
