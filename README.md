@@ -15,7 +15,7 @@
 
 ## Architecture
 
-![아키텍처 구조도](ModelingArchitecture.png)
+![아키텍처 구조도](Architecture.png)
 
 ## Environment
 
