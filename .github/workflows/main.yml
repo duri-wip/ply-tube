@@ -42,9 +42,9 @@ jobs:
           cd /home/ubuntu/feature_store
           dvc version
           dvc pull
-          cd /home/ubuntu/plytube
+          cd /home/ubuntu/ply-tube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
-          python /home/ubuntu/plytube/main.py
+          python /home/ubuntu/ply-tube/main.py
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -56,11 +56,11 @@ jobs:
           eval "$(pyenv init --path)"
           eval "$(pyenv init -)"
           eval "$(pyenv virtualenv-init -)"
-          pyenv activate plytube
+          pyenv activate ply-tube
           pkill -f mlflow
-          cd /home/ubuntu/plytube
+          cd /home/ubuntu/ply-tube
           nohup mlflow server --host 0.0.0.0 --port 5000 > mlflow_server.log 2>&1 &
-          python /home/ubuntu/plytube/app.py
+          python /home/ubuntu/ply-tube/app.py
           curl http://localhost:5001/health
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
