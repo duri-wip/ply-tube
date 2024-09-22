@@ -5,21 +5,21 @@ def production_alias(model_name, param):
     versions = client.search_model_versions(f"name='{model_name}'")
 
     best_model_version = None
-    best_param = 0
+    
     current_production_version = None
 
     # 먼저 production alias가 이미 지정된 모델을 찾기 (tags 사용)
     for version in versions:
         if version.tags.get("stage") == "production":
             current_production_version = version.version
-    print(current_production_version)
+            run_id = version.run_id
+            best_param = client.get_run(run_id).data.metrics.get(f'{param}')
 
     # 최고 성능의 모델 찾기
     for version in versions:
         run_id = version.run_id
-        param_value = client.get_run(run_id).data.metrics.get(f'{param}',0)
-
-        if param_value > best_param:
+        param_value = client.get_run(run_id).data.metrics.get(f'{param}')
+        if param_value < best_param:
             best_param = param_value
             best_model_version = version.version
 
@@ -43,4 +43,4 @@ def production_alias(model_name, param):
         )
         print(f"Model version {best_model_version} with {param} = {best_param} set to 'production' alias.")
     else:
-        print(f"No models found or no model with {param} metric found.")
+        print(f"Model version {current_production_version} with {param} = {best_param} set to 'production' alias")
