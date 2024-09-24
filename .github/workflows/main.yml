@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - dataset
-
+  workflow_dispatch:
+  
 jobs:
   run-main-py:
     runs-on: [self-hosted, linux, ARM64]
